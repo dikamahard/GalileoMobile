@@ -43,6 +43,40 @@ public class AppiumDriverUtil {
         return driver;
     }
 
+    public static AndroidDriver getAndroidDriverQA() throws MalformedURLException {
+
+        DesiredCapabilities cap = new DesiredCapabilities();
+
+//        cap.setCapability("deviceName", "POCO X3 NFC");
+//        cap.setCapability("platformVersion", "11");
+
+        //cap.setCapability("udid", "536e636d");
+        cap.setCapability("deviceName", "Redmi Note 9 Pro");
+        cap.setCapability("platformVersion", "10");
+        cap.setCapability("automationName", "UiAutomator2");
+        cap.setCapability("platformName", "Android");
+        cap.setCapability("appPackage", "com.pvs.project.galileo.qa");      // qa
+//        cap.setCapability("appPackage", "com.pvs.project.galileo.dev");  //dev
+        cap.setCapability("appActivity", "com.pvs.project.galileo.MainActivity");
+        // command for no reinstall every test run
+        cap.setCapability("noReset", "true");
+        cap.setCapability("fullReset", "false");
+
+
+//        cap.setCapability("deviceName", "Test Phone");
+//        cap.setCapability("platformVersion", "10");
+//        cap.setCapability("automationName", "UiAutomator2");
+//        cap.setCapability("platformName", "Android");
+//        cap.setCapability("path", "C:\\Users\\User\\Documents\\Dev\\GalileoMobile\\src\\apk\\ApiDemos-debug.apk");
+
+
+        URL url = new URL("http://127.0.0.1:4723/");
+
+        driver = new AndroidDriver(url, cap);
+
+        return driver;
+    }
+
     public static void quitDriver() {
         if(driver != null) {
             driver.quit();

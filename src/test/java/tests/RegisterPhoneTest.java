@@ -2,6 +2,7 @@ package tests;
 
 import Pages.*;
 import Utils.AppiumDriverUtil;
+import Utils.Helper;
 import dev.failsafe.internal.util.Assert;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -33,7 +34,7 @@ public class RegisterPhoneTest {
     @AfterEach
     public void tearDown() {
         // Close the app after each test, but don't quit the session
-        driver.terminateApp("com.pvs.project.galileo");
+        driver.terminateApp("com.pvs.project.galileo.qa");
     }
 
     @Test
@@ -143,9 +144,185 @@ public class RegisterPhoneTest {
         registerPhonePage.getBtnOk().click();
     }
 
+    @Test
+    public void addPhoneNumberBlankTest() {
+        RegisterPhonePage registerPhonePage = new RegisterPhonePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MyProfilePage myProfilePage = new MyProfilePage(driver);
+        Actions action = new Actions(driver);
+
+        String phoneNum = "087883849227";
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.loginBanner));
+
+        inputPIn();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(homePage.btnProfile));
+
+        homePage.getBtnProfile().click();
+        homePage.getBtnAccountSetting().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(myProfilePage.btnPhoneNumber));
+        myProfilePage.getBtnPhoneNumber().click();
+
+        registerPhonePage.getBtnAddPhoneNumber().click();
+        registerPhonePage.getBtnAddPhoneNumber().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogPleaseInputPhoneNumber));
+
+        assertTrue(registerPhonePage.getDialogPleaseInputPhoneNumber().isDisplayed());
+
+    }
+
+    @Test
+    public void addPhoneNumberWrongFormatTest() {
+        RegisterPhonePage registerPhonePage = new RegisterPhonePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MyProfilePage myProfilePage = new MyProfilePage(driver);
+        Actions action = new Actions(driver);
+
+        String phoneNum = "087883849227";
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.loginBanner));
+
+        inputPIn();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(homePage.btnProfile));
+
+        homePage.getBtnProfile().click();
+        homePage.getBtnAccountSetting().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(myProfilePage.btnPhoneNumber));
+        myProfilePage.getBtnPhoneNumber().click();
+
+        registerPhonePage.getBtnAddPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().sendKeys("000");
+        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.errorMsgInputPhoneNumberCorrectly));
+        assertTrue(registerPhonePage.getErrorMsgInputPhoneNumberCorrectly().isDisplayed());
+    }
+
+    @Test
+    public void addPhoneNumberAlreadyRegisteredTest() {
+        RegisterPhonePage registerPhonePage = new RegisterPhonePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MyProfilePage myProfilePage = new MyProfilePage(driver);
+        Actions action = new Actions(driver);
+
+        String phoneNum = "87883849227";
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.loginBanner));
+
+        inputPIn();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(homePage.btnProfile));
+
+        homePage.getBtnProfile().click();
+        homePage.getBtnAccountSetting().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(myProfilePage.btnPhoneNumber));
+        myProfilePage.getBtnPhoneNumber().click();
+
+        registerPhonePage.getBtnAddPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().sendKeys(phoneNum);
+        registerPhonePage.getBtnAddPhoneNumber().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogAlreadyRegistered));
+        assertTrue(registerPhonePage.getDialogAlreadyRegistered().isDisplayed());
+    }
+
+    @Test
+    public void addPhoneNumberFalseOtpTest() {
+        RegisterPhonePage registerPhonePage = new RegisterPhonePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MyProfilePage myProfilePage = new MyProfilePage(driver);
+        Actions action = new Actions(driver);
+
+        String phoneNum = "087883849225";
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.loginBanner));
+
+        inputPIn();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(homePage.btnProfile));
+
+        homePage.getBtnProfile().click();
+        homePage.getBtnAccountSetting().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(myProfilePage.btnPhoneNumber));
+        myProfilePage.getBtnPhoneNumber().click();
+
+        registerPhonePage.getBtnAddPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().sendKeys(phoneNum);
+        registerPhonePage.getBtnAddPhoneNumber().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.EditText")));
+
+        driver.findElement(By.xpath("//android.widget.EditText")).sendKeys("000000");
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogOtpFailed));
+        assertTrue(registerPhonePage.getDialogOtpFailed().isDisplayed());
+    }
+
+    @Test
+    public void addPhoneNumberFalseOtp3TimesTest() {
+        RegisterPhonePage registerPhonePage = new RegisterPhonePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MyProfilePage myProfilePage = new MyProfilePage(driver);
+        Actions action = new Actions(driver);
+
+        String phoneNum = "087883849225";
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.loginBanner));
+
+        inputPIn();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(homePage.btnProfile));
+
+        homePage.getBtnProfile().click();
+        homePage.getBtnAccountSetting().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(myProfilePage.btnPhoneNumber));
+        myProfilePage.getBtnPhoneNumber().click();
+
+        registerPhonePage.getBtnAddPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().click();
+        registerPhonePage.getEtPhoneNumber().sendKeys(phoneNum);
+        registerPhonePage.getBtnAddPhoneNumber().click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.EditText")));
+
+        driver.findElement(By.xpath("//android.widget.EditText")).sendKeys("000000");
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogOtpFailed));
+        registerPhonePage.getBtnOk().click();
+
+        Helper.tapByCoordinate(630, 740);
+
+        driver.findElement(By.xpath("//android.widget.EditText")).sendKeys("000000");
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogOtpFailed));
+        registerPhonePage.getBtnOk().click();
+
+        Helper.tapByCoordinate(630, 740);
+
+        driver.findElement(By.xpath("//android.widget.EditText")).sendKeys("000000");
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(registerPhonePage.dialogOtpFailed));
+        registerPhonePage.getBtnOk().click();
+
+        // back to login screen
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(loginPage.btnSignIn));
+        assertTrue(loginPage.getBtnSignIn().isDisplayed());
+    }
+
 
     public static void openApp() throws MalformedURLException {
-        driver = AppiumDriverUtil.getAndroidDriver();
+        driver = AppiumDriverUtil.getAndroidDriverQA();
 
         System.out.println("App Started");
     }

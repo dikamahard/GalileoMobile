@@ -22,6 +22,7 @@ public class LoginPage {
     public By dialogInvalidPin = By.xpath("//android.view.View[@content-desc='Authentication\n55 - Invalid PIN']");
     public By dialogInvalidPin3Time = By.xpath("//android.view.View[@content-desc='Authentication\nInvalid PIN exceed max attempt, please login again']");
     public By btnOk = By.xpath("//android.widget.Button[@content-desc='OK']");
+    public By btnForgotPin = By.xpath("//android.view.View[@content-desc='Forgot PIN']");
     public LoginPage(AndroidDriver driver) {
         this.driver = driver;
     }
@@ -36,6 +37,26 @@ public class LoginPage {
 
     public WebElement getBtnOk() {
         return driver.findElement(btnOk);
+    }
+
+    public int getBtnForgotPinX() {
+        int x = driver.findElement(btnForgotPin).getLocation().getX();
+        int y = driver.findElement(btnForgotPin).getLocation().getY();
+
+        int x2 = driver.findElement(btnForgotPin).getLocation().getX() + driver.findElement(btnForgotPin).getSize().getWidth();
+        int y2 = driver.findElement(btnForgotPin).getLocation().getY() + driver.findElement(btnForgotPin).getSize().getHeight();
+
+        return (x2 - x)/2 + 83;
+    }
+
+    public int getBtnForgotPinY() {
+        int x = driver.findElement(btnForgotPin).getLocation().getX();
+        int y = driver.findElement(btnForgotPin).getLocation().getY();
+
+        int x2 = driver.findElement(btnForgotPin).getLocation().getX() + driver.findElement(btnForgotPin).getSize().getWidth();
+        int y2 = driver.findElement(btnForgotPin).getLocation().getY() + driver.findElement(btnForgotPin).getSize().getHeight();
+
+        return y2;
     }
     public WebElement getEtPhoneorEmail() {
         return driver.findElement(etPhoneorEmail);

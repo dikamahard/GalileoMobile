@@ -15,6 +15,7 @@ public class MyProfilePage {
     public By btnYes = By.xpath("//android.widget.Button[@content-desc='Yes']");
     public By btnPin = By.xpath("//android.widget.ImageView[@content-desc='PIN']");
     public By btnBank = By.xpath("//android.widget.ImageView[@content-desc='Bank Card']");
+    public By btnEmail = By.xpath("//android.widget.ImageView[@content-desc='E-mail']");
     public MyProfilePage(AndroidDriver driver) {
         this.driver = driver;
     }
@@ -43,5 +44,8 @@ public class MyProfilePage {
         return driver.findElement(btnBank);
     }
 
+    public WebElement getBtnEmail() {
+        return driver.findElement(btnEmail);
+    }
 
 }
