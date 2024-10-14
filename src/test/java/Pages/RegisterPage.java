@@ -16,7 +16,15 @@ public class RegisterPage {
     public By checkTermAgreement = By.xpath("//android.widget.CheckBox");
     public By btnRegister = By.xpath("//android.widget.Button[@content-desc='Register']");
     public By onBoardingBanner = By.xpath("//android.view.View[contains(@content-desc, 'Welcome') and contains(@content-desc, 'Join Us.')]");
-
+    public By btnOk = By.xpath("//android.widget.Button[@content-desc='OK']");
+    public By errorMsgInputFullName = By.xpath("//android.view.View[@content-desc='Please Input Full Name']");
+    public By errorMsgInputEmail = By.xpath("//android.view.View[@content-desc='Please Input E-mail']");
+    public By errorMsgPhoneNumberCorrectly = By.xpath("//android.view.View[@content-desc='Please Input Phone Number Correctly']");
+    public By errorMsgEmailFormat = By.xpath("//android.view.View[@content-desc='Please Input Correct E-mail Format']");
+    public By dialogInputPhoneNumber = By.xpath("//android.view.View[@content-desc='Register\nPlease Input Phone Number']");
+    public By dialogPhoneOrEmailAlreadyRegistered = By.xpath("//android.view.View[@content-desc='Register\nPhone or Email already registered']");
+    public By dialogOtpFailed = By.xpath("//android.view.View[@content-desc='OTP Failed\n[FAILED] Invalid OTP']");
+    public By dialogNewPinNotMatch = By.xpath("//android.view.View[@content-desc='Create PIN\nNew PIN didn't match !']");
     public RegisterPage(AndroidDriver driver) {
         this.driver = driver;
     }
@@ -50,6 +58,42 @@ public class RegisterPage {
 
     public WebElement getBtnRegister() {
         return driver.findElement(this.btnRegister);
+    }
+
+    public WebElement getBtnOk() {
+        return driver.findElement(this.btnOk);
+    }
+
+    public WebElement getErrorMsgInputFullName() {
+        return driver.findElement(this.errorMsgInputFullName);
+    }
+
+    public WebElement getErrorMsgInputEmail() {
+        return driver.findElement(this.errorMsgInputEmail);
+    }
+
+    public WebElement getErrorMsgPhoneNumberCorrectly() {
+        return driver.findElement(this.errorMsgPhoneNumberCorrectly);
+    }
+
+    public WebElement getErrorMsgEmailFormat() {
+        return driver.findElement(this.errorMsgEmailFormat);
+    }
+
+    public WebElement getDialogInputPhoneNumber() {
+        return driver.findElement(this.dialogInputPhoneNumber);
+    }
+
+    public WebElement getDialogPhoneOrEmailALreadyRegistered() {
+        return driver.findElement(this.dialogPhoneOrEmailAlreadyRegistered);
+    }
+
+    public WebElement getDialogOtpFailed() {
+        return driver.findElement(this.dialogOtpFailed);
+    }
+
+    public WebElement getDialogNewPinNotMatch() {
+        return driver.findElement(this.dialogNewPinNotMatch);
     }
 
     public void inputFullName(String fullName) {

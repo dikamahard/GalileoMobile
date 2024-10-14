@@ -142,7 +142,7 @@ public class LoginTest {
         homePage.getBtnAccountSetting().click();
 
         //Scroll
-        driver.findElement(AppiumBy.androidUIAutomator(        "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Sign Out\"))")).click();
+        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Sign Out\"))")).click();
 
         profilePage.getBtnYes().click();
 

@@ -190,4 +190,10 @@ public class Helper {
         driver.perform(Arrays.asList(tap));
     }
 
+    public static void swipeLeft() {
+
+    }
+
+    //TODO: Scroll function
+
 }
